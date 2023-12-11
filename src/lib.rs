@@ -10,12 +10,24 @@ use bevy::{
     prelude::*,
 };
 
+#[cfg(test)]
+mod tests;
+
+pub mod prelude {
+    pub use super::{
+        entity_cleanup_system, marker_components, resource_cleanup_system, spawn_button,
+        spawn_default_system, square_sprite, state_resource_plugin_from_world,
+        state_resource_plugin_given, ButtonStyle, ClosurePlugin, EntityDespawner, EntitySpawner,
+        ResourceHandle, SquareSprite,
+    };
+}
+
 #[macro_export]
 macro_rules! marker_components {
-    ($($(# $tt:tt)?$id:ident),*) => {
+    ($($(# $tt:tt)*$id:ident),*) => {
         $(
-            #[derive(Clone, Copy, Default, Component)]
-            $(# $tt)?
+            #[derive(Clone, Copy, Default, ::bevy::ecs::component::Component, Hash, PartialEq, Eq, PartialOrd, Ord)]
+            $(# $tt)*
             pub struct $id;
         )*
     };
