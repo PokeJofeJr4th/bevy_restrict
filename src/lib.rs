@@ -119,7 +119,7 @@ pub fn state_resource_plugin_from_world<S: States + Clone, R: Resource + FromWor
 }
 
 #[derive(SystemParam)]
-pub struct EntitySpawner<'w, 's, C: Bundle>(Commands<'w, 's>, PhantomData<C>);
+pub struct EntitySpawner<'w, 's, C: Bundle + 'static>(Commands<'w, 's>, PhantomData<C>);
 
 impl<'w, 's, 'a, C: Bundle + Default> EntitySpawner<'w, 's, C> {
     pub fn spawn_default_with(&'a mut self, bundle: impl Bundle) -> EntityCommands<'w, 's, 'a> {
